@@ -29,7 +29,7 @@ void sendCommand(const char * command){
   //end the string
   reply[i] = '\0';
   Serial.print(reply);
-  Serial.println("Reply successful");
+  Serial.println("Reply end");
 }
 
 void setup () {    
@@ -39,7 +39,11 @@ void setup () {
     mySerial.begin(9600);
     sendCommand ( "AT" );
     sendCommand ("AT+NAMEU-Keeper_D");
-    sendCommand("AT+ADDR?");
+    sendCommand("AT");
+    sendCommand("AT+ROLE0");
+    sendCommand("AT+UUID0xFFE0");
+    sendCommand("AT+CHAR0xFFE1");
+    sendCommand("AT+NAMEbluino");
 
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
