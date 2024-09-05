@@ -43,16 +43,21 @@ void setup () {
     sendCommand("AT+ROLE0");
     sendCommand("AT+UUID0xFFE0");
     sendCommand("AT+CHAR0xFFE1");
-    sendCommand("AT+NAMEbluino");
 
     pinMode(TRIG, OUTPUT);
     pinMode(ECHO, INPUT);
 
+    // RTC에 현재 시간을 설정합니다. 첫 설정 이후에는 주석처리해도 됩니다.
+    // 현재 시간을 처음 설정할 때 아래 코드의 주석을 해제하세요.
+    RtcDateTime compiled = RtcDateTime(__DATE__, __TIME__);
+    Rtc.SetDateTime(compiled);  // RTC에 현재 시간 설정
+    
     // 현재 시간을 받아와 출력
     RtcDateTime now = Rtc.GetDateTime();
     printDateTime(now);
     Serial.println();
 }
+
 
 void loop () {
 

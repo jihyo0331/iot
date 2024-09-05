@@ -5,8 +5,8 @@ int FSRsensor = A0;
 int value = 0;
 int initialValue = 0;
 
-// RTC를 위한 변수 선언
-unsigned long previousMillis = 0; // 이전 시간 저장
+
+unsigned long previousMillis = 0;
 int seconds, minutes, hours, days, months, years;
 
 int daysInMonth(int month, int year) {
@@ -24,7 +24,6 @@ int daysInMonth(int month, int year) {
 }
 
 void initializeRTC() {
-    // __DATE__와 __TIME__ 매크로를 사용해 초기화
     char date[] = __DATE__;  // "MMM DD YYYY"
     char time[] = __TIME__;  // "HH:MM:SS"
     
@@ -53,7 +52,7 @@ void initializeRTC() {
 void updateRTC() {
     unsigned long currentMillis = millis();
     
-    if (currentMillis - previousMillis >= 1000) { // 1초가 경과했을 때
+    if (currentMillis - previousMillis >= 1000) { 
         previousMillis = currentMillis;
         seconds++;
         
@@ -111,7 +110,7 @@ void setup() {
 void loop() {
     updateRTC();
 
-    value = analogRead(FSRsensor);  // 현재 센서 값을 읽음
+    value = analogRead(FSRsensor);  
     Serial.print("Current Value: ");
     Serial.println(value);
 
@@ -119,15 +118,15 @@ void loop() {
     if (value >= initialValue + 150) {
         Serial.println("Value exceeded threshold, sending RTC...");
         sendRTC();
-        delay(5000);  // 5초 대기 (중복 전송 방지)
+        delay(5000);  
     }
 
     // 압력 센서의 값이 초기 값보다 200 이상 하락했을 때
     if (value <= initialValue - 200) {
         Serial.println("Value dropped below threshold, sending RTC...");
         sendRTC();
-        delay(5000);  // 5초 대기 (중복 전송 방지)
+        delay(5000);  
     }
 
-    delay(1000);  // 1초마다 센서 값 확인
+    delay(1000);  
 }
